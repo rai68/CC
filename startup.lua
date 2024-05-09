@@ -1,5 +1,5 @@
 
-local URL = "https://raw.githubusercontent.com/username/repository/branch/file.lua" -- Replace with your GitHub file URL
+local URL = "https://raw.githubusercontent.com/rai68/CC/main/gateDialerv2.lua" 
 local TO_START = "gateDialerv2.lua" -- Local file path
 
 local function downloadFile(url, destination)
@@ -21,9 +21,9 @@ end
 local function executeFile(file)
     local ok, err = pcall(dofile, file)
     if not ok then
-        print("Error executing file:", err)
+        print("File closed file:", err)
         print("Restarting...")
-        os.sleep(5)  -- Adjust the delay before restarting if needed
+        os.sleep(1) 
     end
 end
 
@@ -40,13 +40,13 @@ local function areFilesDifferent(file1, file2)
 end
 
 while true do
-    if not fs.exists(TO_START) then
-        downloadFile(URL, TO_START)
-    else
-        if areFilesDifferent(TO_START, "temp_file.lua") then
-            fs.remove(TO_START)
-            fs.copy("temp_file.lua", TO_START)
-        end
+    sleep(0.2)
+    downloadFile(URL, "tmp.lua")
+    sleep(0.2)
+    if areFilesDifferent(TO_START, "tmp.lua") then
+        fs.remove(TO_START)
+        fs.copy("tmp.lua", TO_START)
     end
+    sleep(0.2)
     executeFile(TO_START)
 end
