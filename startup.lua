@@ -19,12 +19,10 @@ local function downloadFile(url, destination)
 end
 
 local function executeFile(file)
-    local ok, err = pcall(dofile, file)
-    if not ok then
-        print("File closed file:", err)
-        print("Restarting...")
-        os.sleep(1) 
-    end
+    shell.run(file)
+    print("program closed")
+    print("Restarting...")
+    os.sleep(1) 
 end
 
 local function areFilesDifferent(file1, file2)
