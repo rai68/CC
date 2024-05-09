@@ -576,6 +576,7 @@ GateController = {
                     status = 'Charging for:' .. pad_string('Unknown', 11, " ") .. string.format("%.2f", formated_fe_gate_v) .. formated_fe_gate_prefix .. "/" .. string.format("%.2f", formated_fe_gateT_v) .. formated_fe_gateT_prefix
                 end
             end
+            local fid, bte = getRecentFeedback()
             term.clear()
             print("---------------------------------------------------")
             print("| Status:" .. status)
@@ -595,6 +596,9 @@ GateController = {
             print("| Out   :" .. self.totalOutgoingWormholes)
             print("| Total :" .. (self.totalOutgoingWormholes + self.totalIncomingWormholes))
             print("---------------------------------------------------")
+            write(fid)
+            write(" ")
+            write(bte)
             --write(tostring(self.expect_incoming))
             --write(tostring(self.incoming_wormhole))
             --write(tostring(self.expect_outgoing))
