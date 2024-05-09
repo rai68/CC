@@ -196,7 +196,7 @@ GateController = {
             delay = self.delay,
             chargeTo = self.chargeTo,
         }
-        file.write(textutils.serialiseJSON(toWrite))
+        file.write(textutils.serialise(toWrite))
         file.close()
     end,
 
@@ -206,7 +206,7 @@ GateController = {
             return
         end
         local file = fs.open(dir2, 'r')
-        local config = textutils.unserialiseJSON(file.readLine())
+        local config = textutils.unserialise(file.readLine())
         file.close()
         self.totalTravelersIn = config.totalTravelersIn
         self.totalTravelersOut = config.totalTravelersOut
@@ -395,7 +395,6 @@ GateController = {
             end
             for idx,val in ipairs(self.current_dial.address) do
 
-                print(formatAddress(self.current_dial.address), idx)
                 if self.incoming_wormhole or self.abort_dial then
                     self.current_dial = {}
                     self.outgoing_wormhole = false
@@ -596,8 +595,6 @@ GateController = {
             print("| Out   :" .. self.totalOutgoingWormholes)
             print("| Total :" .. (self.totalOutgoingWormholes + self.totalIncomingWormholes))
             print("---------------------------------------------------")
-            write(fid)
-            write(" ")
             write(bte)
             --write(tostring(self.expect_incoming))
             --write(tostring(self.incoming_wormhole))
@@ -678,6 +675,8 @@ networkController = {
 
             if protocol == self._REBOOT then
                 if data == "abcdefg" then
+                    self:saveConfig()
+                    sleep(0.2)
                     os.queueEvent("terminate")
                 end
             end
@@ -756,7 +755,6 @@ networkController = {
         local isBroadcast = false
         while true do 
             local event, side, channel, replyChannel, data, distance = os.pullEvent('modem_message')
-            print(event, textutils.serialise(data))
 
             if channel == self.id then
                 if data.sProtocol then

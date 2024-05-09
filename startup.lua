@@ -10,10 +10,8 @@ local function downloadFile(url, destination)
         local file = io.open(destination, "w")
         file:write(content)
         file:close()
-        print("Downloaded new file from URL:", url)
         return true
     else
-        print("Failed to download file from URL:", url)
         return false
     end
 end
@@ -22,7 +20,8 @@ local function executeFile(file)
     shell.run(file)
     print("program closed")
     print("Restarting...")
-    os.sleep(1) 
+    os.sleep(1)
+    term.clear()
 end
 
 local function areFilesDifferent(file1, file2)
