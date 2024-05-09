@@ -576,7 +576,7 @@ GateController = {
                     status = 'Charging for:' .. pad_string('Unknown', 11, " ") .. string.format("%.2f", formated_fe_gate_v) .. formated_fe_gate_prefix .. "/" .. string.format("%.2f", formated_fe_gateT_v) .. formated_fe_gateT_prefix
                 end
             end
-            local fid, bte = getRecentFeedback()
+            local fid, bte = self.interface.getRecentFeedback()
             term.clear()
             print("---------------------------------------------------")
             print("| Status:" .. status)
