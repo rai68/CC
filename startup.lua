@@ -44,7 +44,7 @@ while true do
     downloadFile(URL, "tmp.lua")
     sleep(0.2)
     if areFilesDifferent(TO_START, "tmp.lua") then
-        fs.remove(TO_START)
+        fs.delete(TO_START)
         fs.copy("tmp.lua", TO_START)
     end
     sleep(0.2)
