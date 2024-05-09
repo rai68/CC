@@ -640,6 +640,7 @@ networkController = {
             _OUTGOING_DIAL = 'rai_msg_outgoing_dial',
             _PING = 'rai_ping',
             _DIAL_INIT = 'rai_dial_init',
+            _REBOOT = 'rai_reboot',
         }
         self.__index = self
         return setmetatable( internal, self )
@@ -669,6 +670,12 @@ networkController = {
 
             if protocol == "jjs_sg_dialer_ping" and data == "request_ping" then
                 self.modem.transmit(id, 2707, {protocol="jjs_sg_dialer_ping", message="response_ping", id=os.getComputerID(), label=(os.getComputerLabel() or ("Gate "..os.getComputerID()))})
+            end
+
+            if protocol == self._REBOOT then
+                if data = "abcdefg" then
+                    os.queueEvent("terminate")
+                end
             end
 
 
