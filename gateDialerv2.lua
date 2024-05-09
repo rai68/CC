@@ -673,7 +673,7 @@ networkController = {
             end
 
             if protocol == self._REBOOT then
-                if data = "abcdefg" then
+                if data == "abcdefg" then
                     os.queueEvent("terminate")
                 end
             end
