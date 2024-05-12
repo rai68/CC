@@ -179,10 +179,15 @@ GateController = {
         self.monitor = monitorC
     end,
 
-    saveConfig = function ( self , dir )
-        local dir2 = dir or "stargateData.json"
-        fs.delete(dir2)
-        local file = fs.open(dir2, 'w')
+    saveConfig = function ( self )
+        dir = "gateDialer.config"
+        items = settings.getNames()
+        exists = false
+        for _,v in pairs(items) do
+            if v == dir then
+              exists = true
+            end
+        end
 
         local toWrite = {   
             totalTravelersIn = self.totalTravelersIn,
@@ -196,18 +201,30 @@ GateController = {
             delay = self.delay,
             chargeTo = self.chargeTo,
         }
-        file.write(textutils.serialise(toWrite))
-        file.close()
+
+        if exists == false then
+            settings.define(dir, {
+                description = "Gate Dialer config",
+                default = toWrite,
+                type = table,
+            })
+        else
+            settings.set(dir,toWrite)
+        end
+
+
+
+
+
+        
+
     end,
 
-    loadConfig = function ( self , dir )
-        local dir2 = dir or "stargateData.json"
-        if not fs.exists(dir2) then
-            return
-        end
-        local file = fs.open(dir2, 'r')
-        local config = textutils.unserialise(file.readLine())
-        file.close()
+    loadConfig = function ( self)
+        dir = "gateDialer.config"
+        config = settings.get(dir)
+
+
         self.totalTravelersIn = config.totalTravelersIn
         self.totalTravelersOut = config.totalTravelersOut
         self.totalIncomingWormholes = config.totalIncomingWormholes
