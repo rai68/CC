@@ -180,9 +180,9 @@ GateController = {
     end,
 
     saveConfig = function ( self )
-        dir = "gateDialer.config"
-        items = settings.getNames()
-        exists = false
+        local dir = "gateDialer.config"
+        local items = settings.getNames()
+        local exists = false
         for _,v in pairs(items) do
             if v == dir then
               exists = true
@@ -221,9 +221,9 @@ GateController = {
     end,
 
     loadConfig = function ( self)
-        dir = "gateDialer.config"
-        config = settings.get(dir)
-
+        local dir = "gateDialer.config"
+        local config = settings.get(dir)
+        print(config)
 
         self.totalTravelersIn = config.totalTravelersIn
         self.totalTravelersOut = config.totalTravelersOut
