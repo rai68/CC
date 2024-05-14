@@ -1,6 +1,7 @@
 
-local URL = "https://raw.githubusercontent.com/rai68/CC/main/gateDialerv2.lua" 
 local TO_START = "gateDialerv2.lua" -- Local file path
+local URL = "https://raw.githubusercontent.com/rai68/CC/main/" .. TO_START
+
 
 local function downloadFile(url, destination)
     local response = http.get(url)

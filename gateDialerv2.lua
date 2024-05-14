@@ -188,28 +188,26 @@ GateController = {
               exists = true
             end
         end
-
-        local toWrite = {   
-            totalTravelersIn = self.totalTravelersIn,
-            totalTravelersOut = self.totalTravelersOut,
-            totalIncomingWormholes = self.totalIncomingWormholes,
-            totalOutgoingWormholes = self.totalOutgoingWormholes,
-
-            fast_dial = self.fast_dial,
-            gate_network = self.gate_network,
-            refreshPeriod = self.refreshPeriod,
-            delay = self.delay,
-            chargeTo = self.chargeTo,
-        }
-
+        print("saving1")
         if exists == false then
-            settings.define(dir, {
-                description = "Gate Dialer config",
-                default = toWrite,
-                type = table,
-            })
+            print("saving2")
+            settings.define(dir)
         else
+            print("saving3")
+            local toWrite = {   
+                totalTravelersIn = self.totalTravelersIn,
+                totalTravelersOut = self.totalTravelersOut,
+                totalIncomingWormholes = self.totalIncomingWormholes,
+                totalOutgoingWormholes = self.totalOutgoingWormholes,
+
+                fast_dial = self.fast_dial,
+                gate_network = self.gate_network,
+                refreshPeriod = self.refreshPeriod,
+                delay = self.delay,
+                chargeTo = self.chargeTo,
+            }
             settings.set(dir,toWrite)
+            settings.save()
         end
 
 
@@ -222,8 +220,23 @@ GateController = {
 
     loadConfig = function ( self)
         local dir = "gateDialer.config"
+
+        local items = settings.getNames()
+        local exists = false
+        for _,v in pairs(items) do
+            if v == dir then
+                print("exists")
+                exists = true
+            end
+        end
+
+        if exists == false then
+            return
+        end
+
         local config = settings.get(dir)
-        print(config)
+
+
 
         self.totalTravelersIn = config.totalTravelersIn
         self.totalTravelersOut = config.totalTravelersOut
@@ -621,6 +634,7 @@ GateController = {
             --write(tostring(self.dhd_dial))
             --write('Dialing: ' .. textutils.serialise(self.current_dial.address) )
             sleep(0.5)
+            self:saveConfig()
         end
     end,
 
