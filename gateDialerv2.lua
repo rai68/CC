@@ -188,12 +188,9 @@ GateController = {
               exists = true
             end
         end
-        print("saving1")
         if exists == false then
-            print("saving2")
             settings.define(dir)
         else
-            print("saving3")
             local toWrite = {   
                 totalTravelersIn = self.totalTravelersIn,
                 totalTravelersOut = self.totalTravelersOut,
