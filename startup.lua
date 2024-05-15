@@ -1,16 +1,20 @@
 
 local TO_START = "gateDialerv2.lua" -- Local file path
-local URL = "https://raw.githubusercontent.com/rai68/CC/main/" .. TO_START
+local URL = "https://raw.githubusercontent.com/rai68/CC/main/"
 
+local EXTRAS = {}
 
 local function downloadFile(url, destination)
+    print("Download begin from: " .. url)
     local response = http.get(url)
     if response then
+        print("Download saving")
         local content = response.readAll()
         response.close()
         local file = io.open(destination, "w")
         file:write(content)
         file:close()
+        print("Download saved")
         return true
     else
         return false
@@ -39,12 +43,13 @@ end
 
 while true do
     sleep(0.2)
-    downloadFile(URL, "tmp.lua")
-    sleep(0.2)
-    if areFilesDifferent(TO_START, "tmp.lua") then
-        fs.delete(TO_START)
-        fs.copy("tmp.lua", TO_START)
+    downloadFile(URL .. TO_START,TO_START)
+    for _,url in pairs(EXTRAS) do 
+        local last_slash_index = url:find("/[^/]*$")
+        local content_after_last_slash = url:sub(last_slash_index + 1)
+        downloadFile(url, content_after_last_slash)
     end
+    sleep(0.2)
     sleep(0.2)
     executeFile(TO_START)
 end
