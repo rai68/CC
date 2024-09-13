@@ -1,6 +1,6 @@
 
 local TO_START = "gateDialerv2.lua" -- Local file path
-local URL = "https://raw.githubusercontent.com/rai68/CC/main/"
+local URL = "https://raw.githubusercontent.com/rai68/CC/main/gateDialerv2.lua"
 
 local EXTRAS = {}
 
